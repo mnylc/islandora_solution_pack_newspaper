@@ -85,10 +85,13 @@ function islandora_newspaper_get_issues(AbstractObject $object) {
     $issues = islandora_newspaper_get_issues_sparql($object);
   }
 
+  drupal_alter('islandora_newspaper_get_issues', $issues, $object);
+
   // Grab the PIDs...
   $get_pid = function ($o) {
     return $o['pid'];
   };
+
   $pids = array_map($get_pid, $issues);
   // Make the PIDs the keys.
   $issues = count($pids) ? array_combine($pids, $issues) : array();
